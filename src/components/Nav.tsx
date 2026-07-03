@@ -42,7 +42,7 @@ export default function Nav({ activeId, year, musicOn, onToggleMusic }: NavProps
   ]
 
   return (
-    <div className="site-nav">
+    <div className="site-nav" data-era={activeId || undefined}>
       <TopNav
         label="Journey through 250 years"
         heading={

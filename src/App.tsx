@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 import { Button } from '@astryxdesign/core/Button'
 import Nav from './components/Nav'
 import Fireworks from './components/Fireworks'
@@ -17,13 +17,35 @@ import { ambientScore } from './audio/music'
 
 const ERA_CHROME: Record<
   string,
-  { edge: 'torn' | 'saw' | 'steps' | 'horizon' | 'clean'; fill: string }
+  { edge: 'torn' | 'saw' | 'steps' | 'horizon' | 'clean'; fill: string; ghost: string }
 > = {
-  founding: { edge: 'torn', fill: 'oklch(0.91 0.032 88)' },
-  expansion: { edge: 'saw', fill: 'oklch(0.235 0.03 55)' },
-  industry: { edge: 'steps', fill: 'oklch(0.33 0.062 232)' },
-  century: { edge: 'horizon', fill: 'oklch(0.165 0.045 265)' },
-  connected: { edge: 'clean', fill: 'oklch(1 0 0)' },
+  founding: { edge: 'torn', fill: 'oklch(0.91 0.032 88)', ghost: '1776' },
+  expansion: { edge: 'saw', fill: 'oklch(0.235 0.03 55)', ghost: '1869' },
+  industry: { edge: 'steps', fill: 'oklch(0.33 0.062 232)', ghost: '1903' },
+  century: { edge: 'horizon', fill: 'oklch(0.165 0.045 265)', ghost: '1969' },
+  connected: { edge: 'clean', fill: 'oklch(1 0 0)', ghost: '2026' },
+}
+
+/* The Declaration quote inks itself in, one word at a time */
+function InkedWords({ text }: { text: string }) {
+  const words = text.split(' ')
+  return (
+    <>
+      {words.map((w, i) => (
+        <span key={i} className="q-word" style={{ '--wi': i } as CSSProperties}>
+          {w + (i < words.length - 1 ? ' ' : '')}
+        </span>
+      ))}
+    </>
+  )
+}
+
+function QuoteFlourish() {
+  return (
+    <svg className="quote-flourish" viewBox="0 0 220 32" aria-hidden="true">
+      <path d="M8,22 C50,6 74,28 104,16 C118,10 122,4 132,8 C142,12 134,24 126,20 C120,17 128,8 146,10 C176,13 194,20 212,16" />
+    </svg>
+  )
 }
 
 function EraSection({
@@ -46,7 +68,10 @@ function EraSection({
     >
       <EraEdge variant={chrome.edge} fill={chrome.fill} />
       <div className="era-inner">
-        <header data-reveal>
+        <header className="era-head" data-reveal>
+          <span className="era-ghost" aria-hidden="true">
+            {chrome.ghost}
+          </span>
           <p className="era-years">{era.years}</p>
           <h2 id={`${era.id}-title`}>{era.title}</h2>
           <p className="era-lede">{era.lede}</p>
@@ -74,12 +99,25 @@ function EraSection({
           ))}
         </ol>
         {afterMoments}
-        {era.quote && (
-          <blockquote className="era-quote" data-reveal>
-            <p>{era.quote.text}</p>
-            <cite>{era.quote.cite}</cite>
-          </blockquote>
-        )}
+        {era.quote &&
+          (era.id === 'founding' ? (
+            <blockquote
+              className="era-quote"
+              data-reveal
+              style={{ '--q-words': era.quote.text.split(' ').length } as CSSProperties}
+            >
+              <p>
+                <InkedWords text={era.quote.text} />
+              </p>
+              <cite>{era.quote.cite}</cite>
+              <QuoteFlourish />
+            </blockquote>
+          ) : (
+            <blockquote className="era-quote" data-reveal>
+              <p>{era.quote.text}</p>
+              <cite>{era.quote.cite}</cite>
+            </blockquote>
+          ))}
       </div>
     </section>
   )
@@ -118,6 +156,11 @@ export default function App() {
   const { activeId, year } = useScrollStory()
   const [musicOn, setMusicOn] = useState(false)
   useRevealOnScroll()
+
+  // the score's timbre follows the reader through history
+  useEffect(() => {
+    ambientScore.setProgress((year - 1776) / 250)
+  }, [year])
 
   const toggleMusic = () => setMusicOn(ambientScore.toggle())
 
@@ -180,14 +223,22 @@ export default function App() {
             label="A grand fireworks finale — click or tap anywhere to launch your own"
           />
           <div className="finale-content">
-            <div className="finale-wordmark" aria-hidden="true">
-              <span className="l-founding">A</span>
-              <span className="l-garamond">M</span>
-              <span className="l-slab">E</span>
-              <span className="l-poster">R</span>
-              <span className="l-poster">I</span>
-              <span className="l-modern">C</span>
-              <span className="l-modern">A</span>
+            <div className="finale-wordmark" aria-hidden="true" data-reveal>
+              {(
+                [
+                  ['A', 'l-founding'],
+                  ['M', 'l-garamond'],
+                  ['E', 'l-slab'],
+                  ['R', 'l-poster'],
+                  ['I', 'l-poster'],
+                  ['C', 'l-modern'],
+                  ['A', 'l-modern'],
+                ] as const
+              ).map(([letter, cls], i) => (
+                <span key={i} className={cls} style={{ '--li': i } as CSSProperties}>
+                  {letter}
+                </span>
+              ))}
             </div>
             <h2 id="finale-title">Happy 250th, America.</h2>
             <p className="finale-quote">

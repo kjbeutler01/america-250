@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { SegmentedControl, SegmentedControlItem } from '@astryxdesign/core/SegmentedControl'
 import { facets } from '../data/eras'
+import NumbersBand from './NumbersBand'
 
 /**
  * "What Makes America" — six facets of the country explained, switched with
@@ -34,6 +35,8 @@ export default function WhyAmerica() {
             this particular experiment turned out unlike any other.
           </p>
         </header>
+
+        <NumbersBand />
 
         <div className="why-switcher" data-reveal>
           <div className="why-tabs-scroll">

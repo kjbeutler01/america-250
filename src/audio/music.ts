@@ -30,7 +30,13 @@ export class AmbientScore {
   private chordTimer: number | null = null
   private sparkleTimer: number | null = null
   private chordIndex = 0
+  /** 0 = 1776, 1 = 2026 — the score brightens as history approaches today */
+  private progress = 0
   playing = false
+
+  setProgress(p: number) {
+    this.progress = Math.min(1, Math.max(0, p))
+  }
 
   toggle(): boolean {
     if (this.playing) this.stop()
@@ -111,7 +117,7 @@ export class AmbientScore {
     // pad: two detuned triangles per note through a soft lowpass
     const lp = ctx.createBiquadFilter()
     lp.type = 'lowpass'
-    lp.frequency.value = 720
+    lp.frequency.value = 560 + 620 * this.progress
     lp.Q.value = 0.4
     const chordGain = ctx.createGain()
     chordGain.gain.setValueAtTime(0.0001, now)
@@ -150,7 +156,9 @@ export class AmbientScore {
 
   private scheduleSparkle() {
     if (!this.playing) return
-    const wait = 2200 + Math.random() * 4200
+    // bells come more often as the timeline nears the present
+    const density = 1.15 - 0.45 * this.progress
+    const wait = (2200 + Math.random() * 4200) * density
     this.sparkleTimer = window.setTimeout(() => {
       this.playSparkle()
       this.scheduleSparkle()

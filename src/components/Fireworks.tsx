@@ -195,26 +195,46 @@ export default function Fireworks({ mode, interactive = false, className, label 
       if (running) raf = requestAnimationFrame(frame)
     }
 
+    let volleyDone = false
+    const volleyTimers: number[] = []
     const start = () => {
       if (running) return
       running = true
       last = performance.now()
       lastLaunch = last
-      launchWait = mode === 'grand' ? 300 : 1400
+      launchWait = mode === 'grand' ? 2600 : 1400
       raf = requestAnimationFrame(frame)
+      // grand finales open with a five-rocket salute
+      if (mode === 'grand' && !volleyDone) {
+        volleyDone = true
+        for (let i = 0; i < 5; i++) {
+          volleyTimers.push(
+            window.setTimeout(() => {
+              if (running) launch(width * (0.14 + 0.18 * i), height * (0.14 + Math.random() * 0.22))
+            }, 250 + i * 260),
+          )
+        }
+      }
     }
     const stop = () => {
       running = false
       cancelAnimationFrame(raf)
+      for (const t of volleyTimers) window.clearTimeout(t)
+      volleyTimers.length = 0
     }
 
     // only animate while on screen and tab visible
+    let onScreen = false
+    const sync = () => (onScreen && !document.hidden ? start() : stop())
     const io = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting && !document.hidden ? start() : stop()),
+      ([entry]) => {
+        onScreen = entry.isIntersecting
+        sync()
+      },
       { threshold: 0.05 },
     )
     io.observe(canvas)
-    const onVisibility = () => (document.hidden ? stop() : start())
+    const onVisibility = () => sync()
     document.addEventListener('visibilitychange', onVisibility)
 
     const onResize = () => {

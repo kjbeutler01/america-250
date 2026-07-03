@@ -6,6 +6,12 @@ import App from './App'
 import './index.css'
 import './styles/eras.css'
 
+console.log(
+  '%c★ Happy 250th, America. ★%c\nSigned at Philadelphia, July 4, 1776 — still going.\nBuilt with Astryx by Meta · fireworks and score generated in your browser.',
+  'font-size:16px;font-weight:bold;color:#6054c8',
+  'color:#8a86b8',
+)
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Theme theme={neutralTheme} mode="dark">
