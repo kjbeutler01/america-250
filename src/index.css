@@ -1,0 +1,517 @@
+@import '@astryxdesign/core/reset.css';
+@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/theme-neutral/theme.css';
+
+/* ---------------------------------------------------------------------------
+   America 250 — global tokens & chrome
+   The site's own art direction evolves era by era (see styles/eras.css).
+   These tokens cover the shared chrome: nav, hero, finale, type scale.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* chrome palette — deep federal indigo, star-white, signal red */
+  --night: oklch(0.135 0.02 279);
+  --night-raise: oklch(0.175 0.025 279);
+  --brand: oklch(0.445 0.206 279.1);
+  --brand-bright: oklch(0.68 0.16 279.1);
+  --brand-soft: oklch(0.82 0.08 279);
+  --glory-red: oklch(0.58 0.2 22);
+  --star-white: oklch(0.965 0.005 279);
+  --muted-on-night: oklch(0.78 0.025 279);
+
+  /* type */
+  --font-modern: 'Archivo', system-ui, sans-serif;
+  --font-founding: 'IM Fell English', 'Iowan Old Style', serif;
+  --font-founding-body: 'EB Garamond', Georgia, serif;
+  --font-slab: 'Bevan', 'Rockwell', serif;
+  --font-poster: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+
+  /* z scale */
+  --z-nav: 40;
+  --z-skip: 60;
+
+  font-family: var(--font-modern);
+  color-scheme: dark;
+}
+
+/* Brand tokens layered over the built neutral Astryx theme (site runs dark).
+   Unlayered author CSS outranks Astryx's @layer astryx-theme rules. */
+[data-astryx-theme] {
+  --color-accent: oklch(0.58 0.19 279.1);
+  --color-background-body: oklch(0.135 0.02 279);
+  --color-background-surface: oklch(0.175 0.025 279);
+  --color-background-card: oklch(0.2 0.028 279);
+  --color-text-primary: oklch(0.96 0.005 279);
+  --color-text-secondary: oklch(0.79 0.02 279);
+  --radius-element: 10px;
+  --radius-container: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--star-white);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- skip link ----------------------------------------------------------- */
+
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: var(--z-skip);
+  padding: 0.6rem 1rem;
+  background: var(--brand);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease-out;
+}
+.skip-link:focus-visible {
+  top: 1rem;
+}
+
+/* --- fixed nav ----------------------------------------------------------- */
+
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-nav);
+  background: oklch(0.135 0.02 279 / 0.82);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid oklch(0.96 0.005 279 / 0.09);
+}
+
+.site-nav .astryx-top-nav {
+  background: transparent;
+  border: none;
+}
+
+.nav-year {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-family: var(--font-modern);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-soft);
+  min-width: 4.2ch;
+  justify-content: flex-end;
+}
+.nav-year::before {
+  content: '★';
+  font-size: 0.6rem;
+  color: var(--glory-red);
+  transform: translateY(-0.15em);
+}
+
+.nav-brand-star {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  color: var(--brand-bright);
+}
+
+/* Hide inline era links on narrow viewports; hamburger takes over */
+.nav-menu-button {
+  display: none;
+}
+@media (max-width: 1080px) {
+  .site-nav .astryx-top-nav a[href^='#'][data-nav-item] {
+    display: none;
+  }
+  .nav-menu-button {
+    display: inline-flex;
+  }
+}
+
+/* --- shared section scaffolding ------------------------------------------ */
+
+main {
+  display: block;
+}
+
+.era {
+  position: relative;
+  padding: clamp(5rem, 12vh, 9rem) clamp(1.25rem, 5vw, 4rem);
+  scroll-margin-top: 56px;
+}
+
+/* Astryx's reset paints text via :where(p){color:var(--color-text-primary)};
+   inside the eras, color must follow each era's own palette instead. */
+.era :where(p, h2, h3, li, cite, blockquote, figcaption, span),
+.hero :where(p, h1),
+.finale :where(p, h2, cite) {
+  color: inherit;
+  font-family: inherit;
+}
+
+.era-inner {
+  max-width: 1080px;
+  margin-inline: auto;
+}
+
+.era-edge {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  display: block;
+  width: 100%;
+  height: clamp(28px, 5vw, 64px);
+  pointer-events: none;
+}
+
+.era-years {
+  margin: 0 0 0.5rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+}
+
+.era h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.75rem, 7vw, 5.75rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.era-lede {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  max-width: 34em;
+  text-wrap: pretty;
+}
+
+/* moments — shared bones, era-specific skins live in eras.css */
+.moments {
+  list-style: none;
+  margin: clamp(3rem, 8vh, 5rem) 0 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(2.25rem, 5vh, 3.5rem);
+  max-width: 780px;
+}
+
+.moment {
+  display: grid;
+  grid-template-columns: 5.2rem 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: baseline;
+}
+
+.moment-year {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.moment h3 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.moment p {
+  margin: 0;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 560px) {
+  .moment {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+/* pull quotes */
+.era-quote {
+  margin: clamp(4rem, 10vh, 6rem) auto 0;
+  max-width: 22em;
+  text-align: center;
+}
+.era-quote p {
+  margin: 0 0 1rem;
+  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.era-quote cite {
+  font-style: normal;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+/* --- reveal-on-scroll (enhancement only; content visible by default) ----- */
+
+.reveal-armed {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-armed {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 7rem 1.5rem 5rem;
+  overflow: clip;
+  background:
+    radial-gradient(120% 90% at 50% 110%, oklch(0.24 0.09 279 / 0.55), transparent 60%),
+    var(--night);
+}
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-content {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  max-width: 52rem;
+}
+
+.hero-dates {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* optically recenter tracked text */
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  color: var(--muted-on-night);
+}
+
+/* The big 250 — a poster numeral, misregistered like a screen print */
+.hero-num {
+  position: relative;
+  isolation: isolate;
+  font-family: var(--font-poster);
+  font-weight: 850;
+  font-size: clamp(9rem, 30vw, 20rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--star-white);
+  user-select: none;
+}
+.hero-num::before,
+.hero-num::after {
+  content: '250';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.hero-num::before {
+  color: var(--glory-red);
+  transform: translate(-0.035em, 0.03em);
+  opacity: 0.85;
+}
+.hero-num::after {
+  color: var(--brand);
+  transform: translate(0.035em, -0.025em);
+  opacity: 0.9;
+}
+
+.hero h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.hero-sub {
+  margin: 0;
+  max-width: 38em;
+  color: var(--muted-on-night);
+  font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+  text-wrap: pretty;
+}
+
+.hero-cta {
+  margin-top: 1.25rem;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: clamp(4.5rem, 9vh, 6.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted-on-night);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  animation: hint-bob 2.6s ease-in-out infinite;
+}
+@keyframes hint-bob {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 8px);
+  }
+}
+
+/* --- finale ---------------------------------------------------------------- */
+
+.finale {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 8rem 1.5rem 3rem;
+  overflow: clip;
+  background: var(--night);
+}
+
+.finale-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.finale-content {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  pointer-events: none; /* clicks fall through to the fireworks canvas */
+}
+.finale-content a,
+.finale-content button {
+  pointer-events: auto;
+}
+
+/* AMERICA — one word, five typefaces, 250 years of design */
+.finale-wordmark {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: nowrap;
+  font-size: clamp(2.6rem, 9vw, 6rem);
+  line-height: 1;
+  color: var(--star-white);
+  user-select: none;
+}
+.finale-wordmark span {
+  display: inline-block;
+}
+.finale-wordmark .l-founding {
+  font-family: var(--font-founding);
+}
+.finale-wordmark .l-garamond {
+  font-family: var(--font-founding-body);
+  font-weight: 600;
+}
+.finale-wordmark .l-slab {
+  font-family: var(--font-slab);
+  font-size: 0.86em;
+}
+.finale-wordmark .l-poster {
+  font-family: var(--font-poster);
+  font-weight: 800;
+}
+.finale-wordmark .l-modern {
+  font-family: var(--font-modern);
+  font-weight: 850;
+}
+
+.finale h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.finale-quote {
+  max-width: 30em;
+  color: var(--muted-on-night);
+  font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+  text-wrap: pretty;
+}
+.finale-quote cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-style: normal;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.finale-hint {
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  color: var(--brand-soft);
+}
+
+.site-footer {
+  position: relative;
+  text-align: center;
+  padding: 2.5rem 1.5rem 2rem;
+  color: var(--muted-on-night);
+  font-size: 0.9rem;
+  background: var(--night);
+}
+.site-footer a {
+  color: var(--brand-soft);
+  text-underline-offset: 3px;
+}

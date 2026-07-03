@@ -1,0 +1,28 @@
+{
+  "name": "america-250",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "start": "serve -s dist -l tcp://0.0.0.0:${PORT:-3000}",
+    "astryx": "node node_modules/@astryxdesign/cli/bin/astryx.mjs"
+  },
+  "dependencies": {
+    "@astryxdesign/core": "^0.1.2",
+    "@astryxdesign/theme-neutral": "^0.1.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "serve": "^14.2.4"
+  },
+  "devDependencies": {
+    "@astryxdesign/cli": "^0.1.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0"
+  }
+}
