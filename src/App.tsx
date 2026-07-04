@@ -194,6 +194,7 @@ export default function App() {
             <p className="hero-sub">
               A history, a birthday card, and an owner's manual — the whole improbable story of
               America, told era by era, from a room in Philadelphia to the edge of the future.
+              The roots run deeper than most textbooks care to dig.
             </p>
             <div className="hero-cta">
               <Button label="Begin in 1776" variant="primary" size="lg" onClick={beginJourney} />
@@ -245,7 +246,12 @@ export default function App() {
               “We shall nobly save, or meanly lose, the last best hope of earth.”
               <cite>Abraham Lincoln · 1862</cite>
             </p>
-            <p className="finale-hint">CLICK OR TAP THE SKY TO LAUNCH A FIREWORK</p>
+            <p className="finale-quote finale-reveal" data-reveal>
+              And if any of this history strikes you as far-fetched, consider the national bird:
+              feathered, taloned, egg-laying — a living theropod dinosaur, and that’s just
+              mainstream biology. They never went extinct. They declared independence.
+            </p>
+            <p className="finale-hint">CLICK THE SKY TO LAUNCH A FIREWORK — THE FLINCHING IS ANCESTRAL</p>
           </div>
         </section>
       </main>

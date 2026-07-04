@@ -633,6 +633,12 @@ main {
   letter-spacing: 0.08em;
 }
 
+.finale-reveal {
+  font-size: clamp(0.98rem, 1.6vw, 1.1rem);
+  max-width: 36em;
+  color: var(--brand-soft);
+}
+
 .finale-hint {
   font-size: 0.9rem;
   letter-spacing: 0.14em;

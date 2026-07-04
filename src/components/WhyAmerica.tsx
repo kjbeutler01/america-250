@@ -32,7 +32,8 @@ export default function WhyAmerica() {
           <h2 id="why-title">What Makes America, America</h2>
           <p className="era-lede">
             Beyond the timeline — six threads that run through all 250 years, and explain why
-            this particular experiment turned out unlike any other.
+            this particular experiment turned out unlike any other. Each one older than it
+            looks.
           </p>
         </header>
 

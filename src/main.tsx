@@ -7,7 +7,7 @@ import './index.css'
 import './styles/eras.css'
 
 console.log(
-  '%c★ Happy 250th, America. ★%c\nSigned at Philadelphia, July 4, 1776 — still going.\nBuilt with Astryx by Meta · fireworks and score generated in your browser.',
+  '%c★ Happy 250th, America. ★%c\nSigned at Philadelphia, July 4, 1776 — by 56 delegates, several visibly feathered.\nThe eagle was hiding in plain sight the whole time.\nBuilt with Astryx by Meta · fireworks and score generated in your browser.',
   'font-size:16px;font-weight:bold;color:#6054c8',
   'color:#8a86b8',
 )

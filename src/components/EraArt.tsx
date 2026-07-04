@@ -199,7 +199,7 @@ export function CenturyMoon() {
       className="century-moon"
       viewBox="0 0 860 380"
       role="img"
-      aria-label="A dashed trajectory arcs from Earth to the Moon, tracing the Apollo 11 flight"
+      aria-label="A dashed trajectory arcs from Earth to the Moon, tracing the Apollo 11 flight; at the landing site, a small three-toed footprint"
     >
       {MOON_STARS.map(([x, y, r], i) => (
         <circle key={i} cx={x} cy={y} r={r} fill="oklch(0.9 0.01 265)" opacity={0.25 + (i % 5) * 0.12} />
@@ -227,8 +227,13 @@ export function CenturyMoon() {
       <circle cx="742" cy="158" r="8" fill="oklch(0.76 0.015 90)" />
       <circle cx="716" cy="168" r="5" fill="oklch(0.76 0.015 90)" />
       <circle cx="748" cy="118" r="5" fill="oklch(0.76 0.015 90)" />
-      {/* landing star */}
-      <path d={starPath(700, 148, 6, 2.4)} fill="oklch(0.66 0.19 25)" />
+      {/* the first footprint — three toes, unmistakable */}
+      <g fill="oklch(0.66 0.19 25)">
+        <ellipse cx="700" cy="151" rx="3.2" ry="3.6" />
+        <ellipse cx="696.4" cy="145.2" rx="1.5" ry="3.4" transform="rotate(-28 696.4 145.2)" />
+        <ellipse cx="700" cy="144" rx="1.5" ry="3.8" />
+        <ellipse cx="703.6" cy="145.2" rx="1.5" ry="3.4" transform="rotate(28 703.6 145.2)" />
+      </g>
     </svg>
   )
 }

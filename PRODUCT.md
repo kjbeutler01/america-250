@@ -14,7 +14,9 @@ A single-page celebration site telling America's story from 1776 to 2026 — its
 
 ## Brand Personality
 
-Sweeping, crafted, celebratory. Like a national-museum exhibition designed by a great poster artist — grand but human. Emotional goals: awe at the scale of the journey, warmth, optimism.
+Sweeping, crafted, celebratory. Like a national-museum exhibition designed by a great poster artist — grand but warm. Emotional goals: awe at the scale of the journey, warmth, optimism, and a slow-dawning grin.
+
+**The bit:** the entire history is narrated by a proud museum docent who happens to be a dinosaur and assumes the reader is too. Same real story, same real dates — humans are simply never mentioned. Hints escalate era by era: deniable idioms in 1776 ("cold-blooded resolve," "quills in abundance"), suspicious details by the 1800s (Jefferson's "enormous old bones, most of them family"), the turn in the industrial era (the tyrant kings of industry, the Model T, short-armed riveters), mask fully off by Apollo ("one giant leap for dinokind"), and the reveal in the finale: the bald eagle is a living theropod — they never went extinct, they declared independence. "66 million" recurs as the running clue. Rules: the word "dinosaur" first appears at the Apollo quote (the designed mask-off) and is otherwise reserved for the finale; solemn moments (Emancipation, Gettysburg, Dr. King, Lazarus) are always played completely straight; jokes are deadpan and never explained.
 
 ## Anti-references
 

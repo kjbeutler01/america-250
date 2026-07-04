@@ -30,7 +30,7 @@ const STATS: StatDef[] = [
     to: 250,
     format: (v) => Math.round(v).toString(),
     label: 'years of the experiment',
-    then: 'and counting',
+    then: '66 million in the making',
   },
 ]
 
